@@ -5,8 +5,16 @@
   "scripts": {
     "dev": "concurrently -k -n API,WEB -c green,blue \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
     "build": "npm --prefix frontend run build",
+    "vercel-build": "npm --prefix frontend ci && npm --prefix frontend run build",
     "documentation:build": "node documentation/generate-guide.mjs && node documentation/publish-downloads.mjs",
     "start:api": "npm --prefix backend start"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.1"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",

@@ -60,11 +60,5 @@
       </section>
       <footer>STACKS LIBRARY SYSTEM · Generated from the current frontend source</footer>
     </main>
-    <script>
-      const apiHost = window.location.hostname || 'localhost';
-      document.querySelectorAll('[data-format]').forEach((link) => {
-        link.href = `http://${apiHost}:5000/api/downloads/${link.dataset.format}`;
-      });
-    </script>
   </body>
 </html>

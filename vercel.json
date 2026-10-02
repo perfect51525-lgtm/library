@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/[...path].js": {
+      "includeFiles": "documentation/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
