@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1d2924" />
+    <title>Download frontend guide · Stacks</title>
+    <style>
+      :root {
+        font-family: "DM Sans", "Segoe UI", sans-serif;
+        color: #202923;
+        background: #f5f6f2;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+      * { box-sizing: border-box; }
+      body { min-width: 320px; min-height: 100vh; margin: 0; }
+      main { width: min(760px, 100%); margin: 0 auto; padding: 42px 24px 64px; }
+      .brand { display: flex; align-items: center; gap: 10px; color: #26372d; font-size: 18px; font-weight: 700; }
+      .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; color: #d4f0de; background: #27624e; }
+      .brand-mark svg { width: 19px; height: 19px; }
+      .brand-dot { margin-left: -9px; color: #d79c43; }
+      .eyebrow { margin: 62px 0 9px; color: #66786a; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+      h1 { margin: 0; color: #1d2c23; font-family: Georgia, serif; font-size: 38px; font-weight: 500; line-height: 1.1; }
+      .intro { margin: 10px 0 28px; color: #718077; font-size: 13px; }
+      .files { display: grid; gap: 11px; }
+      .file { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px; border: 1px solid #e2e8e1; border-radius: 7px; background: #fff; }
+      .file-copy { min-width: 0; }
+      .file-type { display: block; margin-bottom: 5px; color: #799083; font-size: 9px; font-weight: 700; letter-spacing: .8px; }
+      .file-name { display: block; overflow-wrap: anywhere; color: #304036; font-size: 13px; font-weight: 600; }
+      .file-detail { display: block; margin-top: 5px; color: #87928a; font-size: 10px; }
+      .download { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; min-height: 39px; padding: 0 13px; border-radius: 5px; color: #fff; background: #27624e; text-decoration: none; font-size: 11px; font-weight: 600; }
+      .download:hover { background: #1c4739; }
+      .download svg { width: 15px; height: 15px; }
+      footer { margin-top: 25px; padding-top: 14px; border-top: 1px solid #e2e8e1; color: #8a958d; font-size: 10px; }
+      @media (max-width: 540px) {
+        main { padding: 25px 16px 40px; }
+        .eyebrow { margin-top: 46px; }
+        h1 { font-size: 31px; }
+        .file { align-items: flex-start; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 7h7M9 11h7"/></svg></span>Stacks<span class="brand-dot">.</span></div>
+      <p class="eyebrow">FRONTEND DOCUMENTATION</p>
+      <h1>Choose a file to download</h1>
+      <p class="intro">The presentation is editable. The PDF includes the complete file-by-file frontend code appendix.</p>
+      <section class="files" aria-label="Available downloads">
+        <article class="file">
+          <div class="file-copy"><span class="file-type">POWERPOINT · PPTX</span><strong class="file-name">Stacks-Frontend-Walkthrough.pptx</strong><span class="file-detail">10-slide editable walkthrough</span></div>
+          <a class="download" data-format="pptx" href="/downloads/Stacks-Frontend-Walkthrough.pptx" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>Download PPTX</a>
+        </article>
+        <article class="file">
+          <div class="file-copy"><span class="file-type">DOCUMENT · PDF</span><strong class="file-name">Stacks-Frontend-Walkthrough-and-Code.pdf</strong><span class="file-detail">Presentation plus 18 frontend source files</span></div>
+          <a class="download" data-format="pdf" href="/downloads/Stacks-Frontend-Walkthrough-and-Code.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>Download PDF</a>
+        </article>
+      </section>
+      <footer>STACKS LIBRARY SYSTEM · Generated from the current frontend source</footer>
+    </main>
+    <script>
+      const apiHost = window.location.hostname || 'localhost';
+      document.querySelectorAll('[data-format]').forEach((link) => {
+        link.href = `http://${apiHost}:5000/api/downloads/${link.dataset.format}`;
+      });
+    </script>
+  </body>
+</html>
