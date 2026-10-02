@@ -36,8 +36,8 @@ The API listens on port 5000 by default. Set `VITE_API_URL` in `frontend/.env` t
 
 The root `vercel.json` deploys the frontend and API together. It does not deploy a separate documentation site. The app's existing PDF and PowerPoint downloads remain available.
 
-1. Create a MongoDB Atlas database and database user. In Atlas **Network Access**, allow `0.0.0.0/0` so Vercel serverless functions can reach the cluster. Use a unique, strong password and grant the database user access only to this app's database.
-2. In Vercel, import `perfect51525-lgtm/library` as a project. Keep the **Root Directory** set to the repository root; `vercel.json` supplies the frontend build and output settings.
+1. Create a MongoDB Atlas database and database user. In Atlas **Network Access**, allow `0.0.0.0/0` so Vercel can reach the cluster. Use a unique, strong password and grant the database user access only to this app's database.
+2. In Vercel, import `perfect51525-lgtm/library` as a project. Keep the **Root Directory** at the repository root; `vercel.json` configures the `backend` and `frontend` services and routes `/api/*` to the API.
 3. In the Vercel project settings, add `MONGODB_URI` with the Atlas connection string and database name `library_management`, and add `JWT_SECRET` with a long, random secret. Keep both variables private.
 4. Deploy the project. Open `/api/health` on the deployed site and confirm it returns `{"status":"ok"}`. Then open the site and choose **Set up administrator**.
 

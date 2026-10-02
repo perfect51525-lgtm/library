@@ -1,7 +1,5 @@
 import cors from 'cors'
 import express from 'express'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import authRoutes from './routes/authRoutes.js'
 import bookRoutes from './routes/bookRoutes.js'
 import issueRoutes from './routes/issueRoutes.js'
@@ -9,9 +7,9 @@ import memberRoutes from './routes/memberRoutes.js'
 import { getDashboard } from './controllers/dashboardController.js'
 import { asyncHandler } from './middleware/asyncHandler.js'
 import { requireAdmin } from './middleware/auth.js'
+import { connectDatabase } from './database.js'
 
 const app = express()
-const documentationPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'documentation')
 const downloadableFiles = {
   pptx: 'Stacks-Frontend-Walkthrough.pptx',
   pdf: 'Stacks-Frontend-Walkthrough-and-Code.pdf',
@@ -26,8 +24,13 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok' }))
 app.get('/api/downloads/:format', (req, res, next) => {
   const filename = downloadableFiles[req.params.format]
   if (!filename) return res.status(404).json({ message: 'Download not found.' })
-  res.download(path.join(documentationPath, filename), filename, next)
+  const frontendUrl = process.env.VERCEL ? '' : clientOrigins[0]
+  res.redirect(302, `${frontendUrl}/downloads/${encodeURIComponent(filename)}`)
 })
+app.use(asyncHandler(async (req, res, next) => {
+  await connectDatabase()
+  next()
+}))
 app.use('/api/auth', authRoutes)
 app.use('/api/books', bookRoutes)
 app.use('/api/members', memberRoutes)
