@@ -32,6 +32,18 @@ To regenerate the editable frontend walkthrough and PDF with a complete file-by-
 
 The API listens on port 5000 by default. Set `VITE_API_URL` in `frontend/.env` to override `http://localhost:5000/api`, and set `CLIENT_URL` in the backend environment to a comma-separated list if the frontend origin differs from the default local Vite origins.
 
+## Deploy to Render
+
+The root `render.yaml` deploys the library app as two Render services: a static frontend and a Node.js API. It does not deploy a separate documentation site. The existing app download links remain available.
+
+1. Create a MongoDB Atlas database and database user. In Atlas **Network Access**, allow connections from `0.0.0.0/0` so Render can reach the cluster; Render's outbound IPs can vary. Use a strong password and grant the database user access only to this app's database.
+2. In Render, create a **Blueprint** from this GitHub repository and apply the `render.yaml` configuration.
+3. In the `library-api` service's environment settings, set `MONGODB_URI` to the Atlas connection string (including the database name, `library_management`) and `CLIENT_URL` to the deployed `library-web` URL, with no trailing slash. Set `JWT_SECRET` to a long, random secret if Render did not generate one.
+4. In the `library-web` service's environment settings, set `VITE_API_URL` to the deployed `library-api` URL followed by `/api` (for example, `https://library-api.example.onrender.com/api`). Save the setting to trigger a new frontend build.
+5. Open the `library-api` URL plus `/api/health` and confirm it returns `{"status":"ok"}`. Then open the `library-web` URL and choose **Set up administrator**.
+
+Set secrets only in Render's environment settings, not in GitHub or this repository. Atlas IP access set to `0.0.0.0/0` permits network connections from any address, so protect the database with a unique, strong credential and least-privilege database permissions.
+
 ## API
 
 All endpoints except health and authentication require an administrator bearer token.
